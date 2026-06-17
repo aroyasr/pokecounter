@@ -7,6 +7,7 @@
 #define DEFAULT_ODDS 8192
 #define DEFAULT_INCREMENT_NUM 1
 #define DEFAULT_RESET_COUNT 0
+#define FILE_EXT ".lucky"
 
 #include "hunt.h"
 #include <string>
@@ -70,6 +71,11 @@ std::string Hunt::fileString()
 	std::to_string(odds) + "\n" + std::to_string(increment_num);
 }
 
+void Hunt::set_filename()
+{
+	filename = std::to_string(hunt_id) + FILE_EXT;
+}
+
 
 /* contructors */
 Hunt::Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id, 
@@ -79,6 +85,7 @@ Hunt::Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id,
 	this->reset_count = DEFAULT_RESET_COUNT;
 	this->odds = DEFAULT_ODDS;
 	this->increment_num = DEFAULT_INCREMENT_NUM;
+	set_filename();
 }
 
 
@@ -92,4 +99,5 @@ Hunt::Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id,
 	this->reset_count = reset_count; 
 	this->odds = odds; 
 	this->increment_num = increment_num;
+	set_filename();
 }

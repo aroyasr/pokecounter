@@ -54,5 +54,6 @@ private:
 	/*no setters only getters for filename. updated if hunt_id changes, 
 	in which case the old file will be delted and a new file will be created.
 	The user should never have to mess with filenames.*/
+	void set_filename();
 	std::string filename; 
 };

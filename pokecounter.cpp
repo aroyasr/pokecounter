@@ -52,7 +52,7 @@ void pokecounter_signature(){
 
 void print_intro_msg()
 {
-	cout<<""
+	cout<<"\n"
 "Mew wishes you endless luck. \nuse 'help' for command list.\n"
 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⢳⠀⠀⠀⠀⠀\n"
 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠋⠀⢰⠎⠀⠀⠀⠀⠀\n"
@@ -176,7 +176,15 @@ void neww(){
 
 	Hunt shinyhunt(static_cast<unsigned char>(allHunts.size()), pokemon, pokemon_id, game);
 	shinyhunt.set_odds(odds);
-	cout<< "Shiny hunt: \n" << shinyhunt.toString() << endl;
+	cout<< "Shiny hunt: \n" << shinyhunt.toString() << "\n" << endl;
+	Files::saveHunt(shinyhunt);
+}
+
+void hunts(){
+	for (Hunt h: allHunts){
+		cout << h.toString() << endl;
+	}
+	cout << "\n";
 }
 
 /* End of commands */
@@ -184,6 +192,7 @@ void neww(){
 
 int main()
 {
+	Files::loadAllHunts(&allHunts);
 	print_intro_msg();
 	bool running = true;
 	while (running)
@@ -201,11 +210,11 @@ int main()
 			case MenuCommand::neww:
 				neww();
 				break;
-			/*
+			
 			case MenuCommand::hunts:
 				hunts();
 				break;
-			
+			/*
 			case MenuCommand::start:
 				start(args.at(1));
 				break;
