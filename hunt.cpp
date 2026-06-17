@@ -16,10 +16,10 @@
 std::string Hunt::toString()
 {
 	if (increment_num > 1){
-		return "[" + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + ", Devies: " + std::to_string(increment_num) + "]";
+		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + ", Devies: " + std::to_string(increment_num) + "]";
 	}
 	else{
-		return "[" + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + "]";
+		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + "]";
 	}
 }
 
@@ -60,6 +60,14 @@ void Hunt::deincrement(unsigned int x)
 		return;
 	}
 	reset_count -= x;
+}
+
+std::string Hunt::fileString()
+{
+	return std::to_string(hunt_id) + "\n" +
+	pokemon + "\n" std::to_string(pokemon_id) + "\n" +
+	game + "\n" + std::to_string(reset_count) + "\n" +
+	std::to_string(odds) + "\n" + std::to_string(increment_num);
 }
 
 

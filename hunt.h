@@ -35,7 +35,8 @@ public:
 	void increment(unsigned int); 	//+int to counter
 	void deincrement(); 	//-increment_num to counter
 	void deincrement(unsigned int);	//-int to counter
-	std::string toString();
+	std::string fileString(); //for writing to files
+	std::string toString();	  //used by 'hunts' command
 
 	/* contructor */
 	Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id, std::string game);

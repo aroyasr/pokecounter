@@ -98,8 +98,8 @@ void help(){
 Command List:	\n\
 new - create a new hunt.\n\
 hunts - list all hunts saved on disk in the format: [<hunt_id>] [<pokemon>#<pokemon_id>] [<reset_count>]\n\
-start <hunt_id> - starts a saved shiny hunt from the list of hunts.\n\
-delete <hunt_id> - deletes a saved shiny hunt from disk.\n\
+start <id> - starts a saved shiny hunt from the list of hunts.\n\
+delete <id> - deletes a saved shiny hunt from disk.\n\
 settings - view settings commands.\n\
 quit - exit program.\n" << endl;
 }
@@ -108,7 +108,7 @@ void neww(){
 	cout<<"\n\
 	Creating a new shiny hunt...\n";
 
-	string pokemon; cout<< "Enter the name of the pokemon to be hunted.\n";
+	string pokemon; cout<< "Enter the name of the pokemon to be hunted.\n\n";
 	pokecounter_signature();
 	cin >> pokemon;
 
@@ -119,7 +119,7 @@ void neww(){
 	while (!gotID){
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout<<"Enter the ID of the pokemon to be hunted.\n";
+		cout<<"Enter the ID of the pokemon to be hunted.\n\n";
 		pokecounter_signature();
 		if (cin >> temp){
 			if (temp < 0){
@@ -140,7 +140,7 @@ void neww(){
 		}
 	}
 
-	string game; cout<< "Enter the game you are hunting in.\n";
+	string game; cout<< "Enter the game you are hunting in.\n\n";
 	pokecounter_signature();
 	cin >> game;
 
@@ -151,7 +151,7 @@ void neww(){
 	while (!gotID){
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout<< "Enter the odds you are resetting under. (Enter as a whole integer number: Odds for Gens II -> V is 8192, and odds for Gens VI -> onwards is 4096.)\n";
+		cout<< "Enter the odds you are resetting under. (Enter as a whole integer number: Odds for Gens II -> V is 8192, and odds for Gens VI -> onwards is 4096.)\n\n";
 		pokecounter_signature();
 		if (cin >> tempodds){
 			if (tempodds < 0){
