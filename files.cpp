@@ -1,3 +1,9 @@
+/*
+* files.cpp
+* AUTHOR: AROHA KIRI 2026
+* provides implementations for functions defined in files.h.
+*/
+
 #include "hunt.h"
 #include "files.h"
 #include <fstream>
@@ -5,6 +11,7 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
+#include <bits/stdc++.h>
 namespace fs = std::filesystem;
 
 std::vector<fs::directory_entry> Files::entries = {};
@@ -90,12 +97,12 @@ Hunt Files::loadHunt(std::filesystem::directory_entry entry){
 
 bool Files::loadAllHunts(std::vector<Hunt>* allHunts){
 	entries.clear();
+	allHunts->clear();
 	std::string path = fs::current_path();
 	for (fs::directory_entry entry : fs::directory_iterator(path)){
 		if (entry.is_regular_file()){
 			if (entry.path().extension() == ".lucky"){
 				entries.push_back(entry);
-				std::cout << entry.path() << std::endl;
 			}
 		}
 	}
@@ -108,5 +115,26 @@ bool Files::loadAllHunts(std::vector<Hunt>* allHunts){
 		}
 	}
 
+	// sort allHunts by hunt id
+	std::sort(allHunts->begin(), allHunts->end(), [](Hunt a, Hunt b) {
+		return a.get_hunt_id() < b.get_hunt_id();
+	});
+
+	return true;
+}
+
+
+bool Files::deleteHunt(unsigned char pokemon_id){
+	//convert provided char to filename
+	std::string filename = std::to_string(pokemon_id) + ".lucky";
+	char filearr[filename.length()];
+	std::copy(filename.begin(), filename.end(), filearr);
+	filearr[filename.length()] = '\0';
+
+	int status = remove(filearr);
+	if (status != 0){
+		std::cerr<<"Error deleting file!";
+		return false;
+	}
 	return true;
 }

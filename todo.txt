@@ -1,11 +1,9 @@
 todo:
 
-hunt.h:
-- generate filename
-
 pokecounter.cpp:
-- create main loop
+- create hunt mode loop
 
-files.h:
+files:
 - able to read all files in this directory and set up allHunts vector from filedata
 - able to save an active hunt to a file
+- delete hunts

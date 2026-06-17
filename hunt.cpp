@@ -1,7 +1,7 @@
 /*
 * hunt.cpp
 * AUTHOR: AROHA KIRI 2026
-* provides implementations for methods declared in hunt.h.
+* provides implementations for functions declared in hunt.h.
 */
 
 #define DEFAULT_ODDS 8192
@@ -17,10 +17,10 @@
 std::string Hunt::toString()
 {
 	if (increment_num > 1){
-		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + ", Devies: " + std::to_string(increment_num) + "]";
+		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Encounters: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + ", Devies: " + std::to_string(increment_num) + "]";
 	}
 	else{
-		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + "]";
+		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Encounters: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + "]";
 	}
 }
 
