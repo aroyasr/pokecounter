@@ -6,5 +6,5 @@
 
 class Files
 {
-	void x(int);
+	bool saveHunt(Hunt h);
 };

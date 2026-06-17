@@ -1,6 +1,8 @@
-
+#include "hunt.h"
 #include "files.h"
 
-void Files::x(int x){
-	int y = 5;
+
+bool Files::saveHunt(Hunt h){
+  int x = 0;
+  return false;
 }

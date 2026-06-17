@@ -65,7 +65,7 @@ void Hunt::deincrement(unsigned int x)
 std::string Hunt::fileString()
 {
 	return std::to_string(hunt_id) + "\n" +
-	pokemon + "\n" std::to_string(pokemon_id) + "\n" +
+	pokemon + "\n" + std::to_string(pokemon_id) + "\n" +
 	game + "\n" + std::to_string(reset_count) + "\n" +
 	std::to_string(odds) + "\n" + std::to_string(increment_num);
 }
