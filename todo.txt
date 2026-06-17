@@ -1,0 +1,11 @@
+todo:
+
+hunt.h:
+- generate filename
+
+pokecounter.cpp:
+- create main loop
+
+files.h:
+- able to read all files in this directory and set up allHunts vector from filedata
+- able to save an active hunt to a file

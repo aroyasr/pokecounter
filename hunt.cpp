@@ -2,21 +2,39 @@
 * hunt.cpp
 * AUTHOR: AROHA KIRI 2026
 * provides implementations for methods declared in hunt.h.
-*
 */
 
+#define DEFAULT_ODDS 8192
+#define DEFAULT_INCREMENT_NUM 1
+#define DEFAULT_RESET_COUNT 0
+
+#include "hunt.h"
 #include <string>
 
-//concatenate pokemon and pokemon_id in format: <pokemon>#<pokemon_id> ex: lugia#249
-string Hunt::name()
+
+// tostring method.
+std::string Hunt::toString()
 {
-	return pokemon + "#" + pokemon_id;
+	if (increment_num > 1){
+		return "[" + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + ", Devies: " + std::to_string(increment_num) + "]";
+	}
+	else{
+		return "[" + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Resets: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + "]";
+	}
 }
+
+
+//concatenate pokemon and pokemon_id in format: <pokemon>#<pokemon_id> ex: lugia#249
+std::string Hunt::name()
+{
+	return pokemon + "#" + std::to_string(pokemon_id);
+}
+
 
 //+increment_num to counter
 void Hunt::increment()
 {
-	increment(increment_num)
+	increment(increment_num);
 }
 
 
@@ -45,18 +63,25 @@ void Hunt::deincrement(unsigned int x)
 }
 
 
-
 /* contructors */
-Hunt (string pokemon, unsigned int pokemon_id, string game)
+Hunt::Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id, 
+	std::string game)
 {
-	pokemon(pokemon); pokemon_id(pokemon_id); game(game);
-	reset_count = 0;
-	odds = 8192;
-	increment_num = 1;
+	this->hunt_id = hunt_id; this->pokemon = pokemon; this->pokemon_id = pokemon_id; this->game = game;
+	this->reset_count = DEFAULT_RESET_COUNT;
+	this->odds = DEFAULT_ODDS;
+	this->increment_num = DEFAULT_INCREMENT_NUM;
 }
 
 
-Hunt (string pokemon, unsigned int pokemon_id, string game, unsigned int reset_count, unsigned int odds, unsigned int increment_num)
+Hunt::Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id, 
+	std::string game, unsigned int reset_count, unsigned int odds, unsigned int increment_num)
 {
-	pokemon(pokemon); pokemon_id(pokemon_id); game(game); reset_count(reset_count); odds(odds); increment_num(increment_num);
+	this->hunt_id = hunt_id; 
+	this->pokemon = pokemon; 
+	this->pokemon_id = pokemon_id; 
+	this->game = game; 
+	this->reset_count = reset_count; 
+	this->odds = odds; 
+	this->increment_num = increment_num;
 }
