@@ -4,6 +4,4 @@ pokecounter.cpp:
 - create hunt mode loop
 
 files:
-- able to read all files in this directory and set up allHunts vector from filedata
 - able to save an active hunt to a file
-- delete hunts

@@ -56,7 +56,7 @@ void Hunt::deincrement()
 //-int to counter
 void Hunt::deincrement(unsigned int x)
 {
-	if (reset_count - x < 0) { 
+	if (reset_count - x > reset_count) { 
 		reset_count = 0;
 		return;
 	}
