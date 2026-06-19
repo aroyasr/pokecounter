@@ -2,7 +2,7 @@
 * hunt.h
 * AUTHOR: AROHA KIRI 2026
 * provides definitions for the hunt class.
-*
+* The hunt class contains fields for all information related to a specific shiny hunt.
 */
 
 #include <string>

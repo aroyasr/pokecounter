@@ -8,6 +8,7 @@
 #define MAX_ARGS 2
 
 #include "hunt.h"
+#include "files.h"
 #include "huntinterface.h"
 #include <string>
 #include <iostream>
@@ -36,7 +37,7 @@ enum class HuntCommand{
 HuntCommand HuntHashCommand(string str)
 {
 	if (str == "" || str[0] == 'i') return HuntCommand::increment;
-	if (str == "d" || str[0] == 'd') return HuntCommand::deincrement;
+	if (str[0] == 'd') return HuntCommand::deincrement;
 	if (str == "stop" || str == "quit" || str == "exit") return HuntCommand::stop;
 	if (str == "save" || str == "sav") return HuntCommand::save;
 	if (str == "set") return HuntCommand::set;
@@ -108,7 +109,8 @@ vector<string> HuntInterface::sanitize(string input)
 vector<string> randomMessages = {"Surely this is the one...",
 "pls shine", "lets go gambling!", "Pokecounter", "Mew wishes you endless luck.",
 "Also try Minecraft!", "NWEN241", "C++ is awesome.", "Sleep is usually better than paralysis for catching Pokemon.",
-"Be sure to save your progress!", "If you exit with ctrl + c, your progress won't be saved."};
+"Be sure to save your progress!", "If you exit with ctrl + c, your progress won't be saved.",
+"A good omen.", "Believe!"};
 
 
 /* stats (Hunt)
@@ -127,7 +129,7 @@ void stats(Hunt* h)
 "⠀⠀⢀⣀⣀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⣀⣀⠀⠀	\n"
 "⠀⠀⢸⣿⣿⣿⣿⣿⣿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀	\n"
 "⢀⣀⣸⣿⣿⣿⣿⣀⣀⠀⢀⣀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣀⣀	\n"
-"⢸⣿⣿⣿⣿⣿⣿⣿⣿⣀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿	Hunting for: " + h->name() + "\n"
+"⢸⣿⣿⣿⣿⣿⣿⣿⣿⣀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿	Hunting: " + h->name() + "\n"
 "⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿	Playing: " + h->get_game() + "\n"
 "⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿	Shiny odds: 1/" + to_string(h->get_odds()) + "\n"
 "⢸⣿⣿⣀⣀⣿⣿⣿⣿⣿⣇⣀⣀⣀⣸⣿⣿⣿⣿⣿⣇⣀⣸⣿⣿	Encounters: " + to_string(h->get_reset_count()) +"\n"
@@ -142,39 +144,35 @@ void stats(Hunt* h)
 
 void HuntInterface::increment(Hunt* h)
 {
-	cout << "increment(h)" << endl; //DEBUG
 	h->increment();
 }
 void HuntInterface::increment(Hunt* h, int i)
 {
-	cout << "increment(h, i)" << endl; //DEBUG
 	h->increment(i);
 }
 
 void HuntInterface::deincrement(Hunt* h)
 {
-	cout << "deincrement(h)" << endl; //DEBUG
 	h->deincrement();
 }
 void HuntInterface::deincrement(Hunt* h, int i)
 {
-	cout << "deincrement(h, i)" << endl; //DEBUG
 	h->deincrement(i);
 }
 
-void HuntInterface::stop()
+
+void HuntInterface::stop(Hunt* h)
 {
-	cout << "stop()" << endl; //DEBUG
 	cout << "Would you like to save your progress to disk? (y/n)\n";
-	cout << "You can't save yet. In progress.";
+	//get input and save or not
 }
 
-void HuntInterface::save()
+void HuntInterface::save(Hunt* h)
 {
-	cout << "save()" << endl; //DEBUG
+	Files::saveHunt(*h);
 }
 
-void HuntInterface::set()
+void HuntInterface::set(Hunt* h)
 {
 	cout << "set()" << endl; //DEBUG
 }
@@ -263,11 +261,12 @@ void HuntInterface::start(Hunt* currhunt)
 				break;
 
 			case HuntCommand::stop:
-				stop();
+				stop(currhunt);
 				isRunning = false;
 				break;
 
 			case HuntCommand::save:
+				save(currhunt);
 				break;
 
 			case HuntCommand::set:

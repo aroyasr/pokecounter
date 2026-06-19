@@ -20,8 +20,8 @@ private:
 	static void increment(Hunt* h, int i);
 	static void deincrement(Hunt* h);
 	static void deincrement(Hunt* h, int i);
-	static void stop();
-	static void save();
-	static void set();
+	static void stop(Hunt* h);
+	static void save(Hunt* h);
+	static void set(Hunt* h);
 	static std::string help();
 };
