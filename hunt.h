@@ -43,13 +43,13 @@ public:
 	Hunt (unsigned char hunt_id, std::string pokemon, unsigned int pokemon_id, std::string game, unsigned int reset_count, unsigned int odds, unsigned int increment_num);
 
 private:
-	unsigned char hunt_id; // you shouldnt have more than 255 hunts, you greedy bitch!
+	unsigned char hunt_id; // you shouldnt have more than 255 hunts anyway
 	std::string pokemon; 
 	unsigned int pokemon_id;
 	std::string game;
 	unsigned int reset_count;
 	unsigned int odds;
-	unsigned int increment_num; // for those greedy fuckers with like 5 gameboy advances [ im jealous :( ]
+	unsigned int increment_num; // for those with like 5 gameboy advances [ im jealous :( ]
 
 	/*no setters only getters for filename. updated if hunt_id changes, 
 	in which case the old file will be delted and a new file will be created.
