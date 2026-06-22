@@ -21,7 +21,7 @@ public:
 
 
 	/* setters */
-	void set_hunt_id(unsigned char c);
+	bool set_hunt_id(unsigned char c);
 	inline void set_pokemon(std::string s)				{pokemon = s;}
 	inline void set_pokemon_id(unsigned int x)			{pokemon_id = x;}
 	inline void set_game(std::string s)					{game = s;}

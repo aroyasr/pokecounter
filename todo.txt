@@ -1,7 +1,0 @@
-todo:
-
-pokecounter.cpp:
-- create hunt mode loop
-
-files:
-- able to save an active hunt to a file

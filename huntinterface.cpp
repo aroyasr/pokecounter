@@ -5,7 +5,7 @@
 *
 */
 
-#define MAX_ARGS 2
+#define MAX_ARGS 10
 
 #include "hunt.h"
 #include "files.h"
@@ -16,8 +16,6 @@
 #include <algorithm>
 #include <sstream>
 #include <cctype>
-#include <limits>
-#include <cstdint>
 #include <cstdlib>
 
 
@@ -33,6 +31,17 @@ enum class HuntCommand{
 	unknown
 };
 
+enum class Setting{
+	hunt_id,
+	name,
+	dex_num,
+	game,
+	encounters,
+	odds,
+	devices,
+	unknown
+};
+
 
 HuntCommand HuntHashCommand(string str)
 {
@@ -45,6 +54,17 @@ HuntCommand HuntHashCommand(string str)
 	return HuntCommand::unknown;
 }
 
+Setting SettingHashCommand(string str)
+{
+	if (str == "hunt_id") return Setting::hunt_id;
+	if (str == "name") return Setting::name;
+	if (str == "dex_num" || str == "num") return Setting::dex_num;
+	if (str == "game") return Setting::game;
+	if (str == "encounters") return Setting::encounters;
+	if (str == "odds") return Setting::odds;
+	if (str == "devices" || str == "increment") return Setting::devices;
+	return Setting::unknown;
+}
 
 /* pokecounter_signature()
 *  This is printed often.
@@ -62,6 +82,23 @@ void HuntInterface::clear()
 	cout << "\033[2J\033[1;1h";
 }
 
+
+/* str_to_uchar(string)
+ * converts a string to an unsigned char. used to get hunt_id.
+ */
+unsigned char HuntInterface::str_to_uchar(string s){
+	try{
+		int temp = stoi(s);
+		if (temp >= 0 && temp <= 255){
+			unsigned char result = static_cast<unsigned char>(temp);
+			return result;
+		} else {
+			//cerr<<"pokemon_id provided is out of range\n\n";
+			return 255;
+		}} catch(const exception&){
+			return 255;
+		}
+}
 
 /* str to int
 * must return an int > 0 if successful
@@ -90,10 +127,13 @@ vector<string> HuntInterface::sanitize(string input)
 	vector<string> args;
 	istringstream iss(input);
 	string arg;
+	int i = 0;
 
 	while(getline(iss, arg, ' ')) {
 		if (!arg.empty()) {
-			transform(arg.begin(), arg.end(), arg.begin(), ::tolower);
+			i++;
+			if (i < 2)
+				transform(arg.begin(), arg.end(), arg.begin(), ::tolower);
 			args.push_back(arg);
 		}
 	}
@@ -172,9 +212,56 @@ void HuntInterface::save(Hunt* h)
 	Files::saveHunt(*h);
 }
 
-void HuntInterface::set(Hunt* h)
+string HuntInterface::set(Hunt* h, vector<string>* args)
 {
-	cout << "set()" << endl; //DEBUG
+	switch (SettingHashCommand(args->at(1))){
+		case Setting::hunt_id: {
+			unsigned char hunt_id = str_to_uchar(args->at(2));
+			if (hunt_id == 255){
+				return "Invalid hunt_id!\n";
+			}
+			h->set_hunt_id(hunt_id);
+			break;
+		}
+		case Setting::name: {
+			string name = "";
+			for (int i = 2; i < args->size(); i++)
+				{ name = name + args->at(i) + " "; }
+			h->set_pokemon(name);
+			break;
+		}
+		case Setting::dex_num: {
+			int dex_num = str_to_int(args->at(2));
+			h->set_pokemon_id(dex_num);
+			break;
+		}
+		case Setting::game: {
+			string game = "";
+			for (int i = 2; i < args->size(); i++)
+				{ game = game + args->at(i) + " ";}
+			h->set_game(game);
+			break;
+		}
+		case Setting::encounters: {
+			int encounters = str_to_int(args->at(2));
+			h->set_reset_count(encounters);
+			break;
+		}
+		case Setting::odds: {
+			int odds = str_to_int(args->at(2));
+			h->set_odds(odds);
+			break;
+		}
+		case Setting::devices: {
+			int devices = str_to_int(args->at(2));
+			h->set_increment_num(devices);
+			break;
+		}
+		case Setting::unknown: {
+			return "No parameter associated with " + args->at(2);
+		}
+	}
+	return "Set.\n";
 }
 
 string HuntInterface::help()
@@ -237,13 +324,11 @@ void HuntInterface::start(Hunt* currhunt)
 					int increment_num = str_to_int(args.at(1));
 					if (increment_num != -1){
 						increment(currhunt, increment_num);
-						//TODO: reset screen
 					} else{
-						break;
+						message = "Invalid number\n";
 					}
 				} else{
 					increment(currhunt);
-					//TODO: reset screen 
 				}
 				break;
 
@@ -253,7 +338,7 @@ void HuntInterface::start(Hunt* currhunt)
 					if (increment_num != -1){
 						deincrement(currhunt, increment_num);
 					} else{
-						cout << "Invalid number\n";
+						message = "Invalid number\n";
 					}
 				} else{
 					deincrement(currhunt);
@@ -267,9 +352,15 @@ void HuntInterface::start(Hunt* currhunt)
 
 			case HuntCommand::save:
 				save(currhunt);
+				message = "Saved.\n";
 				break;
 
 			case HuntCommand::set:
+				if (args.size() > 2){
+					message = set(currhunt, &args);
+					break;
+				}
+				message = "Not enough arguments provided.\n";
 				break;
 
 			case HuntCommand::help:
@@ -282,6 +373,6 @@ void HuntInterface::start(Hunt* currhunt)
 		}
 	clear(); 
 	if (message != "nomsg")
-		cout << message << "\n\n";
+		cout << message << "";
 	}
 }

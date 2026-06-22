@@ -10,6 +10,7 @@
 #define FILE_EXT ".lucky"
 
 #include "hunt.h"
+#include "files.h"
 #include <string>
 
 
@@ -22,6 +23,20 @@ std::string Hunt::toString()
 	else{
 		return "[id: " + std::to_string(static_cast<int>(hunt_id)) + "] [" + name() + ", Game: " + game + ", Encounters: " + std::to_string(reset_count) + ", Odds: 1/" + std::to_string(odds) + "]";
 	}
+}
+
+
+bool Hunt::set_hunt_id(unsigned char c)
+{
+	if (Files::deleteHunt(hunt_id)){
+		hunt_id = c;
+		set_filename();
+		return true;
+	}
+	else{
+		return false;
+	}
+
 }
 
 

@@ -74,21 +74,6 @@ void print_intro_msg()
 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀\n";
 }
 
-
-unsigned char str_to_uchar(string s){
-	try{
-	int temp = stoi(s);
-	if (temp >= 0 && temp <= 255){
-		unsigned char result = static_cast<unsigned char>(temp);
-		return result;
-	} else {
-		//cerr<<"pokemon_id provided is out of range\n\n";
-		return 255;
-	}} catch(const exception&){
-		return 255;
-	}
-}
-
 /** COMMANDS */
 // The command functions are called by the main loop when the user
 // types the corresponding input. All commands are listed at the
@@ -209,7 +194,7 @@ void hunts()
 void start(string user_input)
 {
 	//user input could be a pokemon name or id.
-	unsigned char hunt_id = str_to_uchar(user_input);
+	unsigned char hunt_id = HuntInterface::str_to_uchar(user_input);
 	if (hunt_id != 255){ //str_to_uchar passed checks so its a valid uchar
 		for (Hunt h: allHunts){
 			if (h.get_hunt_id() == hunt_id){
@@ -237,7 +222,7 @@ bool deletee(string pokemon_id)
 {
 	Files::loadAllHunts(&allHunts);
 
-	unsigned char id = str_to_uchar(pokemon_id);
+	unsigned char id = HuntInterface::str_to_uchar(pokemon_id);
 	bool result;
 	if (id != 255){
 		result = Files::deleteHunt(id);

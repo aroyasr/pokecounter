@@ -14,6 +14,7 @@ public:
 	static void start(Hunt* h); //starts a hunt- essentially the main of huntinterface
 	static std::vector<std::string> sanitize(std::string input); //string->vector seperated by space
 	static void clear(); //clear the screen
+	static unsigned char str_to_uchar(std::string s);
 
 private:
 	static void increment(Hunt* h);
@@ -22,6 +23,6 @@ private:
 	static void deincrement(Hunt* h, int i);
 	static void stop(Hunt* h);
 	static void save(Hunt* h);
-	static void set(Hunt* h);
+	static std::string set(Hunt* h, std::vector<std::string>* args);
 	static std::string help();
 };

@@ -91,7 +91,7 @@ Hunt Files::loadHunt(std::filesystem::directory_entry entry){
 		std::cerr << "Data conversion error. hunt_id value read from file is invalid.";
 	}
 	fsIn.close();
-	std::cerr << "You shouldn't see this error... one of your files is fucked pretty bad.";
+	std::cerr << "You shouldn't see this error... one of your files is  bad.";
 }
 
 
